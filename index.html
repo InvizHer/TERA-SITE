@@ -51,41 +51,47 @@
     </div>
 
     <script>
-        async function downloadFile() {
-            var url = document.getElementById('teraboxUrl').value;
-            if (url.trim() === "") {
-                alert("Please enter a valid Terabox URL.");
-                return;
-            }
-
-            const fetchUrl = 'https://terabox-downloader-direct-download-link-generator.p.rapidapi.com/fetch';
-            const options = {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                    'X-RapidAPI-Key': '5421f06801msh51425f4f279caa5p1aacdejsnbf429f452708',
-                    'X-RapidAPI-Host': 'terabox-downloader-direct-download-link-generator.p.rapidapi.com'
-                },
-                body: JSON.stringify({ url: url })
-            };
-
-            try {
-                const response = await fetch(fetchUrl, options);
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.success) {
-                        window.location.href = result.download_url;
-                    } else {
-                        alert("Error: " + result.message);
-                    }
-                } else {
-                    alert("Error: Unable to fetch the download link. Status code: " + response.status);
-                }
-            } catch (error) {
-                console.error(error);
-                alert("An error occurred. Please try again later.");
-            }
+    async function downloadFile() {
+        var url = document.getElementById('teraboxUrl').value;
+        if (url.trim() === "") {
+            alert("Please enter a valid Terabox URL.");
+            return;
         }
-    </script>
+
+        const fetchUrl = 'https://terabox-downloader-direct-download-link-generator.p.rapidapi.com/fetch';
+        const options = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'X-RapidAPI-Key': '5421f06801msh51425f4f279caa5p1aacdejsnbf429f452708',
+                'X-RapidAPI-Host': 'terabox-downloader-direct-download-link-generator.p.rapidapi.com'
+            },
+            body: JSON.stringify({ url: url })
+        };
+
+        console.log("Sending request...");
+
+        try {
+            const response = await fetch(fetchUrl, options);
+            console.log("Response received:", response);
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log("Result:", result);
+                if (result.success) {
+                    window.location.href = result.download_url;
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } else {
+                console.log("Response status:", response.status);
+                alert("Error: Unable to fetch the download link. Status code: " + response.status);
+            }
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred. Please try again later.");
+        }
+    }
+</script>
 </body>
 </html>
