@@ -51,38 +51,42 @@
     </div>
 
     <script>
-        function downloadFile() {
-            var url = document.getElementById('teraboxUrl').value;
-            if (url.trim() === "") {
-                alert("Please enter a valid Terabox URL.");
-                return;
-            }
-
-            // Make a request to your API to download the file
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://terabox-downloader-direct-download-link-generator.p.rapidapi.com/fetch");
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.setRequestHeader("X-RapidAPI-Key", "5421f06801msh51425f4f279caa5p1aacdejsnbf429f452708");
-            xhr.setRequestHeader("X-RapidAPI-Host", "terabox-downloader-direct-download-link-generator.p.rapidapi.com");
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            // Redirect to the download link
-                            window.location.href = response.download_url;
-                        } else {
-                            alert("Error: " + response.message);
-                        }
-                    } else {
-                        alert("Error: Unable to fetch the download link.");
-                    }
-                }
-            };
-
-            xhr.send(JSON.stringify({ "url": url }));
+    function downloadFile() {
+        var url = document.getElementById('teraboxUrl').value;
+        if (url.trim() === "") {
+            alert("Please enter a valid Terabox URL.");
+            return;
         }
-    </script>
+
+        // Make a request to your API to download the file
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://terabox-downloader-direct-download-link-generator.p.rapidapi.com/fetch");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("X-RapidAPI-Key", "5421f06801msh51425f4f279caa5p1aacdejsnbf429f452708");
+        xhr.setRequestHeader("X-RapidAPI-Host", "terabox-downloader-direct-download-link-generator.p.rapidapi.com");
+
+        xhr.onreadystatechange = function () {
+            console.log(xhr.readyState); // Check the readyState
+            console.log(xhr.status); // Check the status
+            console.log(xhr.responseText); // Check the responseText
+
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Redirect to the download link
+                        window.location.href = response.download_url;
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                } else {
+                    alert("Error: Unable to fetch the download link. Status code: " + xhr.status);
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify({ "url": url }));
+    }
+</script>
 </body>
 </html>
