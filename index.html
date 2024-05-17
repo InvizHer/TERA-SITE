@@ -106,30 +106,50 @@
 <body>
     <div class="postbtn">
         <a href="https://telegram.me/boxgramrobot" class="button">Bot Demo ➜</a>
-        <a href="#" id="sourceCodeButton" class="button">Source Code ➜</a>
+        <a href="#" class="button sourceCodeButton" data-title="Post 1 - Remember to Know" data-content="The source code of this is private and it's paid. Kindly click below to purchase it." data-purchase-link="purchase_link_1" data-contact-link="contact_admin_link_1">Source Code ➜</a>
+    </div>
+    <div class="postbtn">
+        <a href="https://telegram.me/boxgramrobot" class="button">Bot Demo ➜</a>
+        <a href="#" class="button sourceCodeButton" data-title="Post 2 - Important Information" data-content="The source code for this post is private and requires a fee. Click below to proceed." data-purchase-link="purchase_link_2" data-contact-link="contact_admin_link_2">Source Code ➜</a>
     </div>
 
     <!-- Popup Modal -->
     <div id="purchaseModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="modal-title">Remember to Know</div>
-            <p>The source code of this is private and it's paid. Kindly click below to purchase it.</p>
-            <a href="purchase_link" class="purchase-button">Purchase Now</a>
-            <a href="contact_admin_link" class="contact-button">Contact Admin</a>
+            <div class="modal-title"></div>
+            <p class="modal-body"></p>
+            <a href="#" class="purchase-button">Purchase Now</a>
+            <a href="#" class="contact-button">Contact Admin</a>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var modal = document.getElementById("purchaseModal");
-            var btn = document.getElementById("sourceCodeButton");
+            var buttons = document.querySelectorAll(".sourceCodeButton");
             var span = document.getElementsByClassName("close")[0];
+            var modalTitle = document.querySelector(".modal-title");
+            var modalBody = document.querySelector(".modal-body");
+            var purchaseButton = document.querySelector(".purchase-button");
+            var contactButton = document.querySelector(".contact-button");
 
-            btn.onclick = function(event) {
-                event.preventDefault();
-                modal.style.display = "block";
-            }
+            buttons.forEach(button => {
+                button.onclick = function(event) {
+                    event.preventDefault();
+                    var title = button.getAttribute("data-title");
+                    var content = button.getAttribute("data-content");
+                    var purchaseLink = button.getAttribute("data-purchase-link");
+                    var contactLink = button.getAttribute("data-contact-link");
+
+                    modalTitle.textContent = title;
+                    modalBody.textContent = content;
+                    purchaseButton.href = purchaseLink;
+                    contactButton.href = contactLink;
+
+                    modal.style.display = "block";
+                }
+            });
 
             span.onclick = function() {
                 modal.style.display = "none";
