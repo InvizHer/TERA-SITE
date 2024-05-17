@@ -51,6 +51,7 @@
             max-width: 500px;
             border-radius: 10px;
             animation: slideIn 0.5s;
+            text-align: center;
         }
 
         @keyframes slideIn {
@@ -72,7 +73,12 @@
             cursor: pointer;
         }
 
-        .purchase-button {
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .purchase-button, .contact-button {
             display: inline-block;
             padding: 10px 20px;
             background-color: #28a745;
@@ -80,11 +86,20 @@
             text-decoration: none;
             border-radius: 5px;
             margin-top: 20px;
+            margin-right: 10px;
             transition: background-color 0.3s ease;
+        }
+
+        .contact-button {
+            background-color: #dc3545;
         }
 
         .purchase-button:hover {
             background-color: #218838;
+        }
+
+        .contact-button:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -98,8 +113,10 @@
     <div id="purchaseModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
+            <div class="modal-title">Remember to Know</div>
             <p>The source code of this is private and it's paid. Kindly click below to purchase it.</p>
             <a href="purchase_link" class="purchase-button">Purchase Now</a>
+            <a href="contact_admin_link" class="contact-button">Contact Admin</a>
         </div>
     </div>
 
