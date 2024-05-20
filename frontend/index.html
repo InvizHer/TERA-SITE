@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .search-container {
+            text-align: center;
+        }
+        .search-box {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1>Movie Search</h1>
+        <input type="text" id="searchInput" class="search-box" placeholder="Search for a movie...">
+        <button id="searchButton" class="search-button">Search</button>
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                fetch(`/search?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const resultsDiv = document.getElementById('results');
+                        resultsDiv.innerHTML = '';
+                        if (data.length > 0) {
+                            data.forEach(movie => {
+                                const movieDiv = document.createElement('div');
+                                movieDiv.innerHTML = `<p>${movie.name} - <a href="${movie.link}" download>Download</a></p>`;
+                                resultsDiv.appendChild(movieDiv);
+                            });
+                        } else {
+                            resultsDiv.innerHTML = '<p>No results found</p>';
+                        }
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
