@@ -1,7 +1,7 @@
 document.getElementById('searchButton').addEventListener('click', function() {
     const query = document.getElementById('searchInput').value;
     if (query) {
-        fetch(`/search?query=${query}`)
+        fetch(`https://tera-site.vercel.app/search?query=${query}`)
             .then(response => response.json())
             .then(data => {
                 const resultsDiv = document.getElementById('results');
